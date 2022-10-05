@@ -72,16 +72,35 @@ def save():
             ui.ERD.setText("!!!")
         else:
             name = ui.save_name.text()
-            data = [name, ui.s_left.text(), ui.s_rigth.text(), ui.d_left.text(), ui.d_rigth.text(), ui.N.currentText(),
-                    ui.K.currentText(), ui.A.text(), ui.B.text(), ui.OLD.currentText(), ui.frame_offset.text(),
+            data = [name, ui.s_left.text(), ui.s_rigth.text(), ui.d_left.text(), ui.d_rigth.text(), ui.N.currentIndex(),
+                    ui.K.currentIndex(), ui.A.text(), ui.B.text(), ui.OLD.currentIndex(), ui.frame_offset.text(),
                     ui.offset_left.text(), ui.offset_right.text(), ui.ERD.text(), ui.L_rim.text()]
             with open('db.csv', 'a', newline='') as csvfile:
                 writer = csv.writer(csvfile, delimiter=",")
                 writer.writerow(data)
+            show_db()
 
 
 def load():
-    pass
+    name = ui.load_select.currentText()
+    with open('db.csv', 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for i in reader:
+            if i[0] == name:
+                ui.s_left.setText(i[1])
+                ui.s_rigth.setText(i[2])
+                ui.d_left.setText(i[3])
+                ui.d_rigth.setText(i[4])
+                ui.N.setCurrentIndex(int(i[5]))
+                ui.K.setCurrentIndex(int(i[6]))
+                ui.A.setText(i[7])
+                ui.B.setText(i[8])
+                ui.OLD.setCurrentIndex(int(i[9]))
+                ui.frame_offset.setText(i[10])
+                ui.offset_left.setText(i[11])
+                ui.offset_right.setText(i[12])
+                ui.ERD.setText(i[13])
+                ui.L_rim.setText(i[14])
 
 
 def show_db():

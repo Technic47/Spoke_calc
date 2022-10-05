@@ -1,328 +1,95 @@
-# -*- coding: utf-8 -*-
-import math
-from PyQt5 import QtCore, QtGui, QtWidgets
 from math import sqrt, cos
+from UI import *
+import math
+import csv
 import sys
 
+wl = 0
+wr = 0
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(710, 535)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
-        MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget.setGeometry(QtCore.QRect(-4, -1, 711, 461))
-        self.tabWidget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-                                     "background-color: rgb(255, 255, 255);")
-        self.tabWidget.setObjectName("tabWidget")
-        self.tab = QtWidgets.QWidget()
-        self.tab.setObjectName("tab")
-        self.OLD = QtWidgets.QLineEdit(self.tab)
-        self.OLD.setGeometry(QtCore.QRect(310, 360, 51, 20))
-        self.OLD.setObjectName("OLD")
-        self.s_left = QtWidgets.QLineEdit(self.tab)
-        self.s_left.setGeometry(QtCore.QRect(10, 130, 31, 20))
-        self.s_left.setObjectName("s_left")
-        self.d_left = QtWidgets.QLineEdit(self.tab)
-        self.d_left.setGeometry(QtCore.QRect(210, 100, 51, 20))
-        self.d_left.setObjectName("d_left")
-        self.d_rigth = QtWidgets.QLineEdit(self.tab)
-        self.d_rigth.setGeometry(QtCore.QRect(490, 100, 51, 20))
-        self.d_rigth.setObjectName("d_rigth")
-        self.B = QtWidgets.QLineEdit(self.tab)
-        self.B.setGeometry(QtCore.QRect(400, 330, 51, 20))
-        self.B.setObjectName("B")
-        self.A = QtWidgets.QLineEdit(self.tab)
-        self.A.setGeometry(QtCore.QRect(200, 330, 51, 20))
-        self.A.setObjectName("A")
-        self.label_2 = QtWidgets.QLabel(self.tab)
-        self.label_2.setGeometry(QtCore.QRect(10, 0, 251, 181))
-        self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("spocalc_hubdims.gif"))
-        self.label_2.setObjectName("label_2")
-        self.label_4 = QtWidgets.QLabel(self.tab)
-        self.label_4.setGeometry(QtCore.QRect(290, 0, 251, 181))
-        self.label_4.setText("")
-        self.label_4.setPixmap(QtGui.QPixmap("spocalc_hubdims.gif"))
-        self.label_4.setObjectName("label_4")
-        self.s_rigth = QtWidgets.QLineEdit(self.tab)
-        self.s_rigth.setGeometry(QtCore.QRect(290, 130, 31, 20))
-        self.s_rigth.setObjectName("s_rigth")
-        self.label_5 = QtWidgets.QLabel(self.tab)
-        self.label_5.setGeometry(QtCore.QRect(180, 170, 311, 241))
-        self.label_5.setText("")
-        self.label_5.setPixmap(QtGui.QPixmap("old.gif"))
-        self.label_5.setObjectName("label_5")
-        self.N = QtWidgets.QLineEdit(self.tab)
-        self.N.setGeometry(QtCore.QRect(110, 190, 51, 20))
-        self.N.setObjectName("N")
-        self.K = QtWidgets.QLineEdit(self.tab)
-        self.K.setGeometry(QtCore.QRect(110, 220, 51, 20))
-        self.K.setObjectName("K")
-        self.label_8 = QtWidgets.QLabel(self.tab)
-        self.label_8.setGeometry(QtCore.QRect(10, 190, 91, 21))
-        self.label_8.setObjectName("label_8")
-        self.label_9 = QtWidgets.QLabel(self.tab)
-        self.label_9.setGeometry(QtCore.QRect(10, 220, 91, 21))
-        self.label_9.setObjectName("label_9")
-        self.label_10 = QtWidgets.QLabel(self.tab)
-        self.label_10.setGeometry(QtCore.QRect(10, 10, 47, 13))
-        self.label_10.setObjectName("label_10")
-        self.label_11 = QtWidgets.QLabel(self.tab)
-        self.label_11.setGeometry(QtCore.QRect(290, 10, 47, 13))
-        self.label_11.setObjectName("label_11")
-        self.frame_offset = QtWidgets.QLineEdit(self.tab)
-        self.frame_offset.setGeometry(QtCore.QRect(280, 410, 51, 20))
-        self.frame_offset.setObjectName("frame_offset")
-        self.frame_offset.setText('0')
-        self.label_13 = QtWidgets.QLabel(self.tab)
-        self.label_13.setGeometry(QtCore.QRect(200, 410, 71, 16))
-        self.label_13.setObjectName("label_13")
-        self.label_14 = QtWidgets.QLabel(self.tab)
-        self.label_14.setGeometry(QtCore.QRect(340, 410, 121, 16))
-        self.label_14.setObjectName("label_14")
-        self.Straitpull_spokes = QtWidgets.QRadioButton(self.tab)
-        self.Straitpull_spokes.setGeometry(QtCore.QRect(580, 10, 101, 17))
-        self.Straitpull_spokes.setObjectName("Straitpull_spokes")
-        self.Straitpull_spokes.setChecked(False)
-        self.label_15 = QtWidgets.QLabel(self.tab)
-        self.label_15.setGeometry(QtCore.QRect(520, 170, 171, 121))
-        self.label_15.setText("")
-        self.label_15.setPixmap(QtGui.QPixmap("sp-negative-offset.png"))
-        self.label_15.setObjectName("label_15")
-        self.offset_left = QtWidgets.QLineEdit(self.tab)
-        self.offset_left.setGeometry(QtCore.QRect(640, 50, 51, 20))
-        self.offset_left.setObjectName("offset_left")
-        self.offset_right = QtWidgets.QLineEdit(self.tab)
-        self.offset_right.setGeometry(QtCore.QRect(640, 80, 51, 20))
-        self.offset_right.setObjectName("offset_right")
-        self.label_16 = QtWidgets.QLabel(self.tab)
-        self.label_16.setGeometry(QtCore.QRect(600, 160, 47, 13))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_16.setFont(font)
-        self.label_16.setObjectName("label_16")
-        self.label_17 = QtWidgets.QLabel(self.tab)
-        self.label_17.setGeometry(QtCore.QRect(550, 50, 51, 16))
-        self.label_17.setObjectName("label_17")
-        self.label_18 = QtWidgets.QLabel(self.tab)
-        self.label_18.setGeometry(QtCore.QRect(550, 80, 61, 16))
-        self.label_18.setObjectName("label_18")
-        self.label_19 = QtWidgets.QLabel(self.tab)
-        self.label_19.setGeometry(QtCore.QRect(520, 300, 171, 131))
-        self.label_19.setText("")
-        self.label_19.setPixmap(QtGui.QPixmap("sp-positive-offset.png"))
-        self.label_19.setObjectName("label_19")
-        self.label_20 = QtWidgets.QLabel(self.tab)
-        self.label_20.setGeometry(QtCore.QRect(640, 360, 47, 13))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_20.setFont(font)
-        self.label_20.setObjectName("label_20")
-        self.label_13.raise_()
-        self.label_4.raise_()
-        self.label_2.raise_()
-        self.label_5.raise_()
-        self.OLD.raise_()
-        self.s_left.raise_()
-        self.d_left.raise_()
-        self.d_rigth.raise_()
-        self.B.raise_()
-        self.A.raise_()
-        self.s_rigth.raise_()
-        self.N.raise_()
-        self.K.raise_()
-        self.label_8.raise_()
-        self.label_9.raise_()
-        self.label_10.raise_()
-        self.label_11.raise_()
-        self.frame_offset.raise_()
-        self.label_14.raise_()
-        self.Straitpull_spokes.raise_()
-        self.label_15.raise_()
-        self.offset_left.raise_()
-        self.offset_right.raise_()
-        self.label_16.raise_()
-        self.label_17.raise_()
-        self.label_18.raise_()
-        self.label_19.raise_()
-        self.label_20.raise_()
-        self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.ERD = QtWidgets.QLineEdit(self.tab_2)
-        self.ERD.setGeometry(QtCore.QRect(160, 290, 51, 20))
-        self.ERD.setObjectName("ERD")
-        self.label = QtWidgets.QLabel(self.tab_2)
-        self.label.setGeometry(QtCore.QRect(10, 50, 331, 251))
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("SpokeCalc_ERD.gif"))
-        self.label.setObjectName("label")
-        self.label_3 = QtWidgets.QLabel(self.tab_2)
-        self.label_3.setGeometry(QtCore.QRect(400, 50, 271, 291))
-        self.label_3.setText("")
-        self.label_3.setPixmap(QtGui.QPixmap("Asymetric rim sizes (1).jpg"))
-        self.label_3.setObjectName("label_3")
-        self.L_rim = QtWidgets.QLineEdit(self.tab_2)
-        self.L_rim.setGeometry(QtCore.QRect(440, 350, 51, 20))
-        self.L_rim.setText("")
-        self.L_rim.setObjectName("L_rim")
-        self.W_rim = QtWidgets.QLineEdit(self.tab_2)
-        self.W_rim.setGeometry(QtCore.QRect(530, 50, 51, 20))
-        self.W_rim.setObjectName("W_rim")
-        self.Asymetrical = QtWidgets.QRadioButton(self.tab_2)
-        self.Asymetrical.setEnabled(True)
-        self.Asymetrical.setGeometry(QtCore.QRect(490, 10, 82, 17))
-        self.Asymetrical.setObjectName("Asymetrical")
-        self.Asymetrical.setChecked(False)
-        self.label.raise_()
-        self.ERD.raise_()
-        self.label_3.raise_()
-        self.L_rim.raise_()
-        self.W_rim.raise_()
-        self.Asymetrical.raise_()
-        self.tabWidget.addTab(self.tab_2, "")
-        self.Left_side_length = QtWidgets.QLineEdit(self.centralwidget)
-        self.Left_side_length.setGeometry(QtCore.QRect(180, 470, 51, 20))
-        self.Left_side_length.setObjectName("Left_side_length")
-        self.Right_side_length = QtWidgets.QLineEdit(self.centralwidget)
-        self.Right_side_length.setGeometry(QtCore.QRect(300, 470, 51, 20))
-        self.Right_side_length.setObjectName("Right_side_length")
-        self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        self.label_6.setGeometry(QtCore.QRect(130, 470, 41, 21))
-        self.label_6.setObjectName("label_6")
-        self.label_7 = QtWidgets.QLabel(self.centralwidget)
-        self.label_7.setGeometry(QtCore.QRect(240, 470, 51, 21))
-        self.label_7.setObjectName("label_7")
-        self.calculate = QtWidgets.QPushButton(self.centralwidget)
-        self.calculate.setGeometry(QtCore.QRect(20, 470, 75, 23))
-        self.calculate.setObjectName("calculate")
-        self.label_12 = QtWidgets.QLabel(self.centralwidget)
-        self.label_12.setGeometry(QtCore.QRect(560, 470, 131, 16))
-        self.label_12.setObjectName("label_12")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 710, 21))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+def functions():
+    show_db()
+    ui.calculate.clicked.connect(lambda: calculate_lengths())
+    ui.save.clicked.connect(lambda: save())
+    ui.load.clicked.connect(lambda: load())
 
-        self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        self.wl = 0
-        self.wr = 0
+def fill_check():
+    if len(ui.s_left.text()) == 0 or ui.s_left.text() == "!!!":
+        ui.s_left.setText("!!!")
+    elif len(ui.s_rigth.text()) == 0 or ui.s_rigth.text() == "!!!":
+        ui.s_rigth.setText("!!!")
+    elif len(ui.d_left.text()) == 0 or ui.d_left.text() == "!!!":
+        ui.d_left.setText("!!!")
+    elif len(ui.d_rigth.text()) == 0 or ui.d_rigth.text() == "!!!":
+        ui.d_rigth.setText("!!!")
+    elif len(ui.A.text()) == 0 or ui.A.text() == "!!!":
+        ui.A.setText("!!!")
+    elif len(ui.B.text()) == 0 or ui.B.text() == "!!!":
+        ui.B.setText("!!!")
+    elif len(ui.ERD.text()) == 0 or ui.ERD.text() == "!!!":
+        ui.ERD.setText("!!!")
+    else:
+        return True
 
-        self.add_functions()
 
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_8.setText(_translate("MainWindow", "Number of spokes:"))
-        self.label_9.setText(_translate("MainWindow", "Number of crosses:"))
-        self.label_10.setText(_translate("MainWindow", "Left side"))
-        self.label_11.setText(_translate("MainWindow", "Right side"))
-        self.label_13.setText(_translate("MainWindow", "Frame offset:"))
-        self.label_14.setText(_translate("MainWindow", "(+ -> toward driveside)"))
-        self.Straitpull_spokes.setText(_translate("MainWindow", "Straitpullspokes"))
-        self.label_16.setText(_translate("MainWindow", "- Offset"))
-        self.label_17.setText(_translate("MainWindow", "Offset left:"))
-        self.label_18.setText(_translate("MainWindow", "Offset right:"))
-        self.label_20.setText(_translate("MainWindow", "+ Offset"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Hub"))
-        self.Asymetrical.setText(_translate("MainWindow", "Asymetrical"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Rim"))
-        self.label_6.setText(_translate("MainWindow", "Left side"))
-        self.label_7.setText(_translate("MainWindow", "Right side"))
-        self.calculate.setText(_translate("MainWindow", "Calculate"))
-        self.label_12.setText(_translate("MainWindow", "Made by Pavel Kuznetcov"))
-
-    def add_functions(self):
-        self.calculate.clicked.connect(lambda: self.fill_check())
-
-    def fill_check(self):
-        if len(self.s_left.text()) == 0 or self.s_left.text() == "!!!":
-            self.s_left.setText("!!!")
-        elif len(self.s_rigth.text()) == 0 or self.s_rigth.text() == "!!!":
-            self.s_rigth.setText("!!!")
-        elif len(self.d_left.text()) == 0 or self.d_left.text() == "!!!":
-            self.d_left.setText("!!!")
-        elif len(self.d_rigth.text()) == 0 or self.d_rigth.text() == "!!!":
-            self.d_rigth.setText("!!!")
-        elif len(self.N.text()) == 0 or self.N.text() == "!!!":
-            self.N.setText("!!!")
-        elif len(self.K.text()) == 0 or self.K.text() == "!!!":
-            self.K.setText("!!!")
-        elif len(self.A.text()) == 0 or self.A.text() == "!!!":
-            self.A.setText("!!!")
-        elif len(self.B.text()) == 0 or self.B.text() == "!!!":
-            self.B.setText("!!!")
-        elif len(self.OLD.text()) == 0 or self.OLD.text() == "!!!":
-            self.OLD.setText("!!!")
-        elif len(self.ERD.text()) == 0 or self.ERD.text() == "!!!":
-            self.ERD.setText("!!!")
-        elif self.Asymetrical.isChecked():
-            if len(self.W_rim.text()) == 0 or self.W_rim.text() == "!!!":
-                self.W_rim.setText("!!!")
-            elif len(self.L_rim.text()) == 0 or self.L_rim.text() == "!!!":
-                self.L_rim.setText("!!!")
-            else:
-                self.calculate_lengths()
-        elif self.Straitpull_spokes.isChecked():
-            if len(self.offset_left.text()) == 0 or self.offset_left.text() == "!!!":
-                self.offset_left.setText("!!!")
-            elif len(self.offset_right.text()) == 0 or self.offset_right.text() == "!!!":
-                self.offset_right.setText("!!!")
-            else:
-                self.calculate_lengths()
-        else:
-            self.calculate_lengths()
-
-    def calculate_lengths(self):
-        sl = float(self.s_left.text())
-        sr = float(self.s_rigth.text())
-        dl = float(self.d_left.text())
-        dr = float(self.d_rigth.text())
-        N = float(self.N.text())
-        K = float(self.K.text())
-        ERD = float(self.ERD.text())
-        f_off = float(self.frame_offset.text())
+def calculate_lengths():
+    if fill_check():
+        sl = float(ui.s_left.text())
+        sr = float(ui.s_rigth.text())
+        dl = float(ui.d_left.text())
+        dr = float(ui.d_rigth.text())
+        N = float(ui.N.currentText())
+        K = float(ui.K.currentText())
+        OLD = float(ui.OLD.currentText())
+        ERD = float(ui.ERD.text())
+        ro = float(ui.L_rim.text())
+        f_off = float(ui.frame_offset.text())
 
         res = (((360 / (N / 2)) * K) * math.pi) / 180
         cos_calc = cos(res)
 
-        if self.Asymetrical.isChecked():
-            ro = (float(self.W_rim.text()) / 2) - float(self.L_rim.text())
-            self.wl = (float(self.OLD.text()) / 2 - float(self.A.text())) - ro - f_off
-            self.wr = (float(self.OLD.text()) / 2 - float(self.B.text())) + ro + f_off
+        if ui.Asymetrical.isChecked():
+            ui.wl = (OLD / 2 - float(ui.A.text())) - ro - f_off
+            ui.wr = (OLD / 2 - float(ui.B.text())) + ro + f_off
         else:
-            self.wl = float(self.OLD.text()) / 2 - float(self.A.text()) - f_off
-            self.wr = float(self.OLD.text()) / 2 - float(self.B.text()) + f_off
+            ui.wl = (OLD / 2 - float(ui.A.text())) + ro - f_off
+            ui.wr = (OLD / 2 - float(ui.B.text())) - ro + f_off
 
         left_calc = sqrt(pow(ERD / 2, 2) + pow(dl / 2, 2) - 2 * (ERD / 2) * (dl / 2) * cos_calc)
-        length_left = sqrt(pow(self.wl, 2) + pow(left_calc, 2)) - sl / 2
-        if self.Straitpull_spokes.isChecked():
-            length_left += float(self.offset_left.text())
-        self.Left_side_length.setText(str(round(length_left, 2)))
+        length_left = sqrt(pow(ui.wl, 2) + pow(left_calc, 2)) - sl / 2 + float(ui.offset_left.text())
+        ui.Left_side_length.setText(str(round(length_left, 2)))
 
         right_calc = sqrt(pow(ERD / 2, 2) + pow(dr / 2, 2) - 2 * (ERD / 2) * (dr / 2) * cos_calc)
-        length_right = sqrt(pow(self.wr, 2) + pow(right_calc, 2)) - sr / 2
-        if self.Straitpull_spokes.isChecked():
-            length_right += float(self.offset_right.text())
-        self.Right_side_length.setText(str(round(length_right, 2)))
+        length_right = sqrt(pow(ui.wr, 2) + pow(right_calc, 2)) - sr / 2 + float(ui.offset_right.text())
+        ui.Right_side_length.setText(str(round(length_right, 2)))
+
+
+def save():
+    if fill_check():
+        if len(ui.save_name.text()) == 0 or ui.save_name.text() == "!!!":
+            ui.ERD.setText("!!!")
+        else:
+            name = ui.save_name.text()
+            data = [name, ui.s_left.text(), ui.s_rigth.text(), ui.d_left.text(), ui.d_rigth.text(), ui.N.currentText(),
+                    ui.K.currentText(), ui.A.text(), ui.B.text(), ui.OLD.currentText(), ui.frame_offset.text(),
+                    ui.offset_left.text(), ui.offset_right.text(), ui.ERD.text(), ui.L_rim.text()]
+            with open('db.csv', 'a', newline='') as csvfile:
+                writer = csv.writer(csvfile, delimiter=",")
+                writer.writerow(data)
+
+
+def load():
+    pass
+
+
+def show_db():
+    ui.load_select.clear()
+    with open('db.csv', 'r', newline='') as csvfile:
+        reader = csv.reader(csvfile)
+        for i in reader:
+            ui.load_select.addItem(i[0])
 
 
 if __name__ == "__main__":
@@ -331,4 +98,5 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+    functions()
     sys.exit(app.exec_())
